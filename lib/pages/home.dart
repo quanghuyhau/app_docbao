@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:app_docbao/pages/landing_page.dart';
+import 'package:app_docbao/authentication/login.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../authentication/login.dart';
 import '../models/article_model.dart';
 import '../models/category_model.dart';
 import '../models/coin_model.dart';
@@ -91,18 +90,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Color(0xFFF1F4FF),
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => LandingPage()));
-            },
-            child: Icon(Icons.arrow_back)),
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(width: 50,),
             Text("App"),
             Text(
               " Đọc Báo",
@@ -110,6 +102,17 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+            },
+            child: Text(
+              "Đăng xuất",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -196,23 +199,35 @@ class _HomeState extends State<Home> {
                     loading2
                         ? Center(child: CircularProgressIndicator())
                         : CarouselSlider.builder(
-                            itemCount: 5,
-                            itemBuilder: (context, index, realIndex) {
-                              String? res = sliders[index].urlToImage;
-                              String? res1 = sliders[index].title;
-                              return buildImage(res!, index, res1!);
-                            },
-                            options: CarouselOptions(
-                                height: 250,
-                                autoPlay: true,
-                                enlargeCenterPage: true,
-                                enlargeStrategy:
-                                    CenterPageEnlargeStrategy.height,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    activeIndex = index;
-                                  });
-                                })),
+                      itemCount: sliders.length,
+                      itemBuilder: (context, index, realIndex) {
+                        String image = sliders[index].urlToImage ?? '';
+                        String title = sliders[index].title ?? '';
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ArticleView(blogUrl: sliders[index].url ?? ''),
+                              ),
+                            );
+                          },
+                          child: buildImage(image, index, title),
+                        );
+                      },
+                      options: CarouselOptions(
+                        height: 250,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.height,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            activeIndex = index;
+                          });
+                        },
+                      ),
+                    ),
+
                     SizedBox(
                       height: 30.0,
                     ),

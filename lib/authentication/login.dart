@@ -23,29 +23,57 @@ class _LogInState extends State<LogIn> {
   TextEditingController useremailcontroller = TextEditingController();
   TextEditingController userpasswordcontroller = TextEditingController();
 
-  bool _obscureText = true; // Biến trạng thái để kiểm soát hiển thị mật khẩu
+  bool _obscureText = true;
 
   userLogin() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email, password: password);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-    } on FirebaseException catch (e) {
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-              "Email không tồn tại",
-              style: TextStyle(fontSize: 18.0, color: Colors.black),
-            )));
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.orangeAccent,
+        email: email,
+        password: password,
+      );
+
+      // Hiển thị SnackBar thông báo đăng nhập thành công
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
           content: Text(
-            "Mật khẩu của bạn phải có 6 kí tự",
-            style: TextStyle(fontSize: 18),
+            'Đăng nhập thành công!',
+            style: TextStyle(fontSize: 18.0, color: Colors.white),
           ),
-        ));
+          backgroundColor: Colors.green, // Màu nền của SnackBar
+        ),
+      );
+
+      // Chuyển hướng đến trang Home sau khi đăng nhập thành công
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        // Hiển thị lỗi 'Email không tồn tại' dưới trường nhập liệu Email
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Email không tồn tại!',
+              style: TextStyle(fontSize: 18.0, color: Colors.white),
+            ),
+            backgroundColor: Colors.red, // Màu nền của SnackBar
+          ),
+        );
+      } else if (e.code == 'wrong-password') {
+        // Hiển thị lỗi 'Mật khẩu không chính xác' dưới trường nhập liệu Mật khẩu
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Mật khẩu không chính xác!',
+              style: TextStyle(fontSize: 18.0, color: Colors.white),
+            ),
+            backgroundColor: Colors.red, // Màu nền của SnackBar
+          ),
+        );
       }
+    } catch (e) {
+      print(e.toString());
     }
   }
 
@@ -131,12 +159,22 @@ class _LogInState extends State<LogIn> {
                                 if (value == null || value.isEmpty) {
                                   return 'Vui lòng nhập Email';
                                 }
+                                if (!value.contains('@')) {
+                                  return 'Định dạng Email không hợp lệ';
+                                }
                                 return null;
                               },
+                              onChanged: (value) {
+                                setState(() {
+                                  email = value.trim();
+                                });
+                              },
                               decoration: InputDecoration(
-                                  hintText: 'Email',
-                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                  prefixIcon: Icon(Icons.email_outlined)),
+                                hintText: 'Email',
+                                hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                prefixIcon: Icon(Icons.email_outlined),
+                                errorStyle: TextStyle(color: Colors.red),
+                              ),
                             ),
                             SizedBox(
                               height: 30,
@@ -150,6 +188,11 @@ class _LogInState extends State<LogIn> {
                                 return null;
                               },
                               obscureText: _obscureText,
+                              onChanged: (value) {
+                                setState(() {
+                                  password = value.trim();
+                                });
+                              },
                               decoration: InputDecoration(
                                 hintText: 'Mật khẩu',
                                 hintStyle: AppWidget.semiBoldTextFeildStyle(),
@@ -166,6 +209,7 @@ class _LogInState extends State<LogIn> {
                                     });
                                   },
                                 ),
+                                errorStyle: TextStyle(color: Colors.red),
                               ),
                             ),
                             SizedBox(

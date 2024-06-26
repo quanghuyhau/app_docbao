@@ -19,7 +19,7 @@ class _ArticleViewState extends State<ArticleView> {
           children: [
             Text("App"),
             Text(
-              "Đọc Báo",
+              " Đọc Báo",
               style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
             )
           ],
