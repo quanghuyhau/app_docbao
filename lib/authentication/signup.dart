@@ -17,10 +17,10 @@ class _SignUpState extends State<SignUp> {
   bool _isObscure = true;
   bool _isConfirmObscure = true;
 
-  TextEditingController namecontroller = new TextEditingController();
-  TextEditingController passwordcontroller = new TextEditingController();
-  TextEditingController confirmPasswordController = new TextEditingController();
-  TextEditingController mailcontroller = new TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController mailcontroller = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
 
@@ -30,31 +30,36 @@ class _SignUpState extends State<SignUp> {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.redAccent,
-            content: Text(
-              "Đăng ký thành công",
-              style: TextStyle(fontSize: 20.0),
-            )));
+          backgroundColor: Colors.redAccent,
+          content: Text(
+            "Đăng ký thành công",
+            style: TextStyle(fontSize: 20.0),
+          ),
+        ));
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LogIn()));
-      } on FirebaseException catch (e) {
+          context,
+          MaterialPageRoute(builder: (context) => LogIn()),
+        );
+      } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.orangeAccent,
             content: Text(
-              "Mật khẩu của bạn phải có 6 kí tự",
+              "Mật khẩu của bạn phải có ít nhất 6 ký tự",
               style: TextStyle(fontSize: 18),
             ),
           ));
-        } else if (e.code == "email-already-in-use") {
-          ScaffoldMessenger.of(context).showSnackBar((SnackBar(
+        } else if (e.code == 'email-already-in-use') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.orangeAccent,
             content: Text(
-              "Tài khoản đã tồn tại ",
+              "Tài khoản đã tồn tại",
               style: TextStyle(fontSize: 18),
             ),
-          )));
+          ));
         }
+      } catch (e) {
+        print(e.toString());
       }
     }
   }
@@ -70,23 +75,27 @@ class _SignUpState extends State<SignUp> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 2.5,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFFff5c30),
-                        Color(0xFFe74b1a),
-                      ])),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFFff5c30),
+                    Color(0xFFe74b1a),
+                  ],
+                ),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40))),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
               child: Text(""),
             ),
             Container(
@@ -101,9 +110,7 @@ class _SignUpState extends State<SignUp> {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(
-                    height: 50,
-                  ),
+                  SizedBox(height: 50),
                   GestureDetector(
                     onTap: () async {
                       if (_formkey.currentState!.validate()) {
@@ -134,22 +141,19 @@ class _SignUpState extends State<SignUp> {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height / 1.5,
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         child: Form(
                           key: _formkey,
                           child: Column(
                             children: [
-                              SizedBox(
-                                height: 30,
-                              ),
+                              SizedBox(height: 30),
                               Text(
                                 "Đăng Ký",
                                 style: AppWidget.HeadlineTextFeildStyle(),
                               ),
-                              SizedBox(
-                                height: 30,
-                              ),
+                              SizedBox(height: 30),
                               TextFormField(
                                 controller: namecontroller,
                                 validator: (value) {
@@ -159,87 +163,94 @@ class _SignUpState extends State<SignUp> {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                    hintText: 'Tên của bạn',
-                                    hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                    prefixIcon: Icon(Icons.person_outlined)),
+                                  hintText: 'Tên của bạn',
+                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  prefixIcon: Icon(Icons.person_outlined),
+                                ),
                               ),
-                              SizedBox(
-                                height: 30,
-                              ),
+                              SizedBox(height: 30),
                               TextFormField(
                                 controller: mailcontroller,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Vui lòng nhập Email';
                                   }
+                                  // Regular expression for valid email address
+                                  if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+                                      .hasMatch(value)) {
+                                    return 'Vui lòng nhập đúng định dạng email';
+                                  }
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                    hintText: 'Email',
-                                    hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                    prefixIcon: Icon(Icons.email_outlined)),
+                                  hintText: 'Email',
+                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  prefixIcon: Icon(Icons.email_outlined),
+                                ),
                               ),
-                              SizedBox(
-                                height: 30,
-                              ),
+                              SizedBox(height: 30),
                               TextFormField(
                                 controller: passwordcontroller,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Vui lòng nhập Password';
                                   }
+                                  if (value.length < 6) {
+                                    return 'Mật khẩu phải có ít nhất 6 ký tự';
+                                  }
                                   return null;
                                 },
                                 obscureText: _isObscure,
                                 decoration: InputDecoration(
-                                    hintText: 'Mật khẩu',
-                                    hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                    prefixIcon: Icon(Icons.password_outlined),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        _isObscure
-                                            ? Icons.visibility
-                                            : Icons.visibility_off,
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          _isObscure = !_isObscure;
-                                        });
-                                      },
-                                    )),
+                                  hintText: 'Mật khẩu',
+                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  prefixIcon: Icon(Icons.password_outlined),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _isObscure
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure = !_isObscure;
+                                      });
+                                    },
+                                  ),
+                                ),
                               ),
-                              SizedBox(
-                                height: 30,
-                              ),
+                              SizedBox(height: 30),
                               TextFormField(
                                 controller: confirmPasswordController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Vui lòng nhập lại Password';
                                   }
+                                  if (value != passwordcontroller.text) {
+                                    return 'Mật khẩu không khớp';
+                                  }
                                   return null;
                                 },
                                 obscureText: _isConfirmObscure,
                                 decoration: InputDecoration(
-                                    hintText: 'Nhập lại mật khẩu',
-                                    hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                    prefixIcon: Icon(Icons.password_outlined),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        _isConfirmObscure
-                                            ? Icons.visibility
-                                            : Icons.visibility_off,
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          _isConfirmObscure = !_isConfirmObscure;
-                                        });
-                                      },
-                                    )),
+                                  hintText: 'Nhập lại mật khẩu',
+                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  prefixIcon: Icon(Icons.password_outlined),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _isConfirmObscure
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isConfirmObscure = !_isConfirmObscure;
+                                      });
+                                    },
+                                  ),
+                                ),
                               ),
-                              SizedBox(
-                                height: 40,
-                              ),
+                              SizedBox(height: 40),
                               GestureDetector(
                                 onTap: () async {
                                   if (_formkey.currentState!.validate()) {

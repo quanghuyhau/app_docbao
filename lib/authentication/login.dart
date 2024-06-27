@@ -32,43 +32,39 @@ class _LogInState extends State<LogIn> {
         password: password,
       );
 
-      // Hiển thị SnackBar thông báo đăng nhập thành công
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
             'Đăng nhập thành công!',
             style: TextStyle(fontSize: 18.0, color: Colors.white),
           ),
-          backgroundColor: Colors.green, // Màu nền của SnackBar
+          backgroundColor: Colors.green,
         ),
       );
 
-      // Chuyển hướng đến trang Home sau khi đăng nhập thành công
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Home()),
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        // Hiển thị lỗi 'Email không tồn tại' dưới trường nhập liệu Email
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               'Email không tồn tại!',
               style: TextStyle(fontSize: 18.0, color: Colors.white),
             ),
-            backgroundColor: Colors.red, // Màu nền của SnackBar
+            backgroundColor: Colors.red,
           ),
         );
       } else if (e.code == 'wrong-password') {
-        // Hiển thị lỗi 'Mật khẩu không chính xác' dưới trường nhập liệu Mật khẩu
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               'Mật khẩu không chính xác!',
               style: TextStyle(fontSize: 18.0, color: Colors.white),
             ),
-            backgroundColor: Colors.red, // Màu nền của SnackBar
+            backgroundColor: Colors.red,
           ),
         );
       }
