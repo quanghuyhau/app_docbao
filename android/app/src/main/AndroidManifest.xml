@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="app_docbao"
+        android:label="Nhom4-Mobie"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon_hau">
         <activity
             android:name=".MainActivity"
             android:exported="true"
