@@ -59,7 +59,7 @@ class _LandingPageState extends State<LandingPage> {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LogIn()));
               },
               child: Container(
-                width: MediaQuery.of(context).size.width / 1.2,
+                width: MediaQuery.of(context).size.width / 2,
                 child: Material(
                   borderRadius: BorderRadius.circular(30),
                   elevation: 5.0,
@@ -68,7 +68,8 @@ class _LandingPageState extends State<LandingPage> {
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(30)),
-                    child: Center(
+                    child:
+                    Center(
                       child: Text(
                         "Bắt đầu",
                         style: TextStyle(

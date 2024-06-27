@@ -23,8 +23,8 @@ class CoinCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: Container(
-        height: 120,
-        width: 500,
+        height: 150,
+        width: 300,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -62,7 +62,7 @@ class CoinCard extends StatelessWidget {
                         name,
                         style: TextStyle(
                           color: Colors.grey[900],
-                          fontSize: 25,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -73,7 +73,7 @@ class CoinCard extends StatelessWidget {
                         symbol,
                         style: TextStyle(
                           color: Colors.grey[900],
-                          fontSize: 20,
+                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -91,7 +91,7 @@ class CoinCard extends StatelessWidget {
               "\$ " + currentPrice.toString(),
                     style: TextStyle(
                       color: Colors.grey[900],
-                      fontSize: 20,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -101,7 +101,7 @@ class CoinCard extends StatelessWidget {
                         : '+' + priceChange24H.toString()+ " \$",
                     style: TextStyle(
                       color: priceChange24H < 0 ? Colors.red : Colors.blue,
-                      fontSize: 18,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -113,7 +113,7 @@ class CoinCard extends StatelessWidget {
                       color: priceChangePercentage24H < 0
                           ? Colors.red
                           : Colors.blue,
-                      fontSize: 18,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

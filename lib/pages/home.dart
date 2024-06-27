@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:app_docbao/authentication/login.dart';
+import 'package:app_docbao/pages/search_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -16,6 +18,7 @@ import 'all_news.dart';
 import 'article_view.dart';
 import 'category_news.dart';
 import 'coin.dart';
+import 'drawer_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -89,12 +92,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawerScrimColor: Colors.transparent,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(width: 50,),
             Text("App"),
             Text(
               " Đọc Báo",
@@ -104,18 +106,19 @@ class _HomeState extends State<Home> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
-            },
-            child: Text(
-              "Đăng xuất",
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SearchScreen(articles: articles)));
+              },
+              child: Icon(Icons.search)),
         ],
         centerTitle: true,
         elevation: 0.0,
       ),
+      drawer: CustomDrawer(),
       body: _loading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -199,34 +202,35 @@ class _HomeState extends State<Home> {
                     loading2
                         ? Center(child: CircularProgressIndicator())
                         : CarouselSlider.builder(
-                      itemCount: sliders.length,
-                      itemBuilder: (context, index, realIndex) {
-                        String image = sliders[index].urlToImage ?? '';
-                        String title = sliders[index].title ?? '';
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ArticleView(blogUrl: sliders[index].url ?? ''),
-                              ),
-                            );
-                          },
-                          child: buildImage(image, index, title),
-                        );
-                      },
-                      options: CarouselOptions(
-                        height: 250,
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                        enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            activeIndex = index;
-                          });
-                        },
-                      ),
-                    ),
+                            itemCount: sliders.length,
+                            itemBuilder: (context, index, realIndex) {
+                              String image = sliders[index].urlToImage ?? '';
+                              String title = sliders[index].title ?? '';
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ArticleView(
+                                          blogUrl: sliders[index].url ?? ''),
+                                    ),
+                                  );
+                                },
+                                child: buildImage(image, index, title),
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: 250,
+                              autoPlay: true,
+                              enlargeCenterPage: true,
+                              enlargeStrategy: CenterPageEnlargeStrategy.height,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  activeIndex = index;
+                                });
+                              },
+                            ),
+                          ),
 
                     SizedBox(
                       height: 30.0,

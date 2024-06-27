@@ -18,9 +18,8 @@ class _CoinDemoState extends State<CoinDemo> {
   @override
   Widget build(BuildContext context) {
     return  SizedBox(
-      height: 150,
-      width: 500,
-      child: PageView.builder(
+      height: 120,
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: coinList.length,
         itemBuilder: (context, index) {
