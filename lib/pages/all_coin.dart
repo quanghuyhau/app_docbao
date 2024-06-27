@@ -111,7 +111,7 @@ class CoinTile extends StatelessWidget {
                       Text(
                         "24h: ${priceChange24H.toStringAsFixed(2)} (${priceChangePercentage24H.toStringAsFixed(2)}%)",
                         style: TextStyle(
-                            color: priceChange24H > 0 ? Colors.green : Colors.red,
+                            color: priceChange24H > 0 ? Colors.blue : Colors.red,
                             fontWeight: FontWeight.w500,
                             fontSize: 18.0),
                       ),
