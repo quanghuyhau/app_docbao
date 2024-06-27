@@ -1,7 +1,11 @@
+import 'package:app_docbao/pages/all_coin.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../authentication/login.dart';
+import '../models/coin_model.dart';
+import 'all_categories.dart';
+import 'all_news.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -43,7 +47,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       Text(
                         _user!.email ?? "",
                         style: TextStyle(
-                          color: Colors.white70,
+                          color: Colors.white,
                           fontSize: 16,
                         ),
                       ),
@@ -51,20 +55,64 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   )
                 : Center(
                     child: Text(
-                      'No user logged in',
+                      'Bạn chưa đăng nhập vào tài khoản',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
           ),
           ListTile(
-            leading: Icon(Icons.home),
+            leading: Image(image: AssetImage("images/home.png"),width: 30,height: 30,),
             title: Text('Trang chủ'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.logout),
+            leading: Image(image: AssetImage("images/usa.png"),width: 30,height: 30,),
+            title: Text('Tin tức về Mỹ'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AllCategoriesNews()));
+            },
+          ),
+
+          ListTile(
+            leading: Image(image: AssetImage("images/apple.png"),width: 30,height: 30,),
+            title: Text('Tin tức về Apple'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AllNews(news: "Tin tức về Apple")));
+            },
+          ),
+          ListTile(
+            leading: Image(image: AssetImage("images/tc.png"),width: 30,height: 25,),
+            title: Text('Tin tức về TechCrunch'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AllNews(news: "Tin tức về TechCrunch")));
+            },
+          ),
+          ListTile(
+            leading: Image(image: AssetImage("images/coin.png"),width: 30,height: 30,),
+            title: Text('Tin tức về Coin'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AllCoins(coins: coinList)));
+              },
+          ),
+          ListTile(
+            leading: Image(image: AssetImage("images/logout.png"),width: 30,height: 25,),
             title: Text('Đăng xuất'),
             onTap: () async {
               await FirebaseAuth.instance.signOut();

@@ -56,7 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
         itemCount: filteredArticles.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(filteredArticles[index].title!),
+            title: Text(filteredArticles[index].title!,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
             subtitle: Text(filteredArticles[index].description!),
             onTap: () {
               Navigator.push(

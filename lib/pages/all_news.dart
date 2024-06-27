@@ -44,6 +44,7 @@ class _AllNewsState extends State<AllNews> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,21 +62,21 @@ class _AllNewsState extends State<AllNews> {
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
             itemCount:
-                widget.news == "Breaking" ? sliders.length : articles.length,
+                widget.news == "Tin tức về TechCrunch" ? sliders.length : articles.length,
             itemBuilder: (context, index) {
               print(articles.length);
               print(sliders.length);
               return AllNewsSection(
-                  Image: widget.news == "Breaking"
+                  Image: widget.news == "Tin tức về TechCrunch"
                       ? sliders[index].urlToImage!
                       : articles[index].urlToImage!,
-                  desc: widget.news == "Breaking"
+                  desc: widget.news == "Tin tức về TechCrunch"
                       ? sliders[index].description!
                       : articles[index].description!,
-                  title: widget.news == "Breaking"
+                  title: widget.news == "Tin tức về TechCrunch"
                       ? sliders[index].title!
                       : articles[index].title!,
-                  url: widget.news == "Breaking"
+                  url: widget.news == "Tin tức về TechCrunch"
                       ? sliders[index].url!
                       : articles[index].url!);
             }),

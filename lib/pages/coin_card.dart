@@ -91,29 +91,29 @@ class CoinCard extends StatelessWidget {
               "\$ " + currentPrice.toString(),
                     style: TextStyle(
                       color: Colors.grey[900],
-                      fontSize: 15,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     priceChange24H.toDouble() < 0
-                        ? priceChange24H.toString() + " \$"
-                        : '+' + priceChange24H.toString()+ " \$",
+                        ? priceChange24H.toStringAsFixed(2) + " \$"
+                        : '+' + priceChange24H.toStringAsFixed(2)+ " \$",
                     style: TextStyle(
                       color: priceChange24H < 0 ? Colors.red : Colors.blue,
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     priceChangePercentage24H < 0
-                        ? priceChangePercentage24H.toString() + '%'
-                        : '+' + priceChangePercentage24H.toString() + '%',
+                        ? priceChangePercentage24H.toStringAsFixed(2) + '%'
+                        : '+' + priceChangePercentage24H.toStringAsFixed(2) + '%',
                     style: TextStyle(
                       color: priceChangePercentage24H < 0
                           ? Colors.red
                           : Colors.blue,
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

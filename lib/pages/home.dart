@@ -14,6 +14,8 @@ import '../models/slider_model.dart';
 import '../services/data.dart';
 import '../services/news.dart';
 import '../services/slider_data.dart';
+import 'all_categories.dart';
+import 'all_coin.dart';
 import 'all_news.dart';
 import 'article_view.dart';
 import 'category_news.dart';
@@ -126,6 +128,42 @@ class _HomeState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Tin tức về Mỹ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AllCategoriesNews()));
+                            },
+                            child: Text(
+                              "Tất cả",
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.blue,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.0),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Container(
                       margin: EdgeInsets.only(left: 10.0),
                       height: 70,
@@ -143,18 +181,41 @@ class _HomeState extends State<Home> {
                           }),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
 
                     ///COIN
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                      child: Text(
-                        "Tin tức về Coin",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Tin tức về Coin",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AllCoins(coins: coinList)));
+                            },
+                            child: Text(
+                              "Tất cả",
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.blue,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.0),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     CoinDemo(),
@@ -180,8 +241,8 @@ class _HomeState extends State<Home> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          AllNews(news: "Breaking")));
+                                      builder: (context) => AllNews(
+                                          news: "Tin tức về TechCrunch")));
                             },
                             child: Text(
                               "Tất cả ",
