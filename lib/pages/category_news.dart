@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../models/show_category.dart';
 import '../services/show_category_news.dart';
-import 'article_view.dart';
+import 'web_view.dart';
 
 
 class CategoryNews extends StatefulWidget {

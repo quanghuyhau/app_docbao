@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import '../models/show_category.dart';
 import '../services/show_category_news.dart';
-import 'article_view.dart';
+import 'web_view.dart';
 
 class AllCategoriesNews extends StatefulWidget {
   @override

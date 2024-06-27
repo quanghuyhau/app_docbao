@@ -17,7 +17,7 @@ import '../services/slider_data.dart';
 import 'all_categories.dart';
 import 'all_coin.dart';
 import 'all_news.dart';
-import 'article_view.dart';
+import 'web_view.dart';
 import 'category_news.dart';
 import 'coin.dart';
 import 'drawer_screen.dart';

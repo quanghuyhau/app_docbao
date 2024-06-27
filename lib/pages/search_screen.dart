@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/article_model.dart';
-import 'article_view.dart';
+import 'web_view.dart';
 
 class SearchScreen extends StatefulWidget {
   final List<ArticleModel> articles;
@@ -18,7 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    filteredArticles = [];  // Initialize as empty list
+    filteredArticles = [];
   }
 
   void _filterArticles(String query) {

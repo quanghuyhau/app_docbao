@@ -6,7 +6,7 @@ import '../models/article_model.dart';
 import '../models/slider_model.dart';
 import '../services/news.dart';
 import '../services/slider_data.dart';
-import 'article_view.dart';
+import 'web_view.dart';
 
 
 class AllNews extends StatefulWidget {
