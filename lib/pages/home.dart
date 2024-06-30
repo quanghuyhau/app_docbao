@@ -472,7 +472,7 @@ class BlogTile extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Material(
-            elevation: 3.0,
+            elevation: 5.0,
             borderRadius: BorderRadius.circular(10),
             child: Padding(
               padding:

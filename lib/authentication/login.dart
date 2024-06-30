@@ -137,136 +137,139 @@ class _LogInState extends State<LogIn> {
                           borderRadius: BorderRadius.circular(20)),
                       child: Form(
                         key: _formkey,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              "Đăng Nhập",
-                              style: AppWidget.HeadlineTextFeildStyle(),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            TextFormField(
-                              controller: useremailcontroller,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Vui lòng nhập Email';
-                                }
-                                if (!value.contains('@')) {
-                                  return 'Định dạng Email không hợp lệ';
-                                }
-                                return null;
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  email = value.trim();
-                                });
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Email',
-                                hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                prefixIcon: Icon(Icons.email_outlined),
-                                errorStyle: TextStyle(color: Colors.red),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
                               ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            TextFormField(
-                              controller: userpasswordcontroller,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Vui lòng nhập Password';
-                                }
-                                return null;
-                              },
-                              obscureText: _obscureText,
-                              onChanged: (value) {
-                                setState(() {
-                                  password = value.trim();
-                                });
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Mật khẩu',
-                                hintStyle: AppWidget.semiBoldTextFeildStyle(),
-                                prefixIcon: Icon(Icons.password_outlined),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    _obscureText
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _obscureText = !_obscureText;
-                                    });
-                                  },
-                                ),
-                                errorStyle: TextStyle(color: Colors.red),
+                              Text(
+                                "Đăng Nhập",
+                                style: AppWidget.HeadlineTextFeildStyle(),
                               ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ForgotPassword()));
-                              },
-                              child: Container(
-                                  alignment: Alignment.topRight,
-                                  child: Text(
-                                    "Quên mật khẩu?",
-                                    style: AppWidget.semiBoldTextFeildStyle(),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 50,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (_formkey.currentState!.validate()) {
+                              SizedBox(
+                                height: 30,
+                              ),
+                              TextFormField(
+                                focusNode: FocusNode(),
+                                controller: useremailcontroller,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Vui lòng nhập Email';
+                                  }
+                                  if (!value.contains('@')) {
+                                    return 'Định dạng Email không hợp lệ';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
                                   setState(() {
-                                    email = useremailcontroller.text;
-                                    password = userpasswordcontroller.text;
+                                    email = value.trim();
                                   });
-                                }
-                                userLogin();
-                              },
-                              child: Material(
-                                elevation: 5,
-                                borderRadius: BorderRadius.circular(20),
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Email',
+                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  prefixIcon: Icon(Icons.email_outlined),
+                                  errorStyle: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              TextFormField(
+                                controller: userpasswordcontroller,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Vui lòng nhập Password';
+                                  }
+                                  return null;
+                                },
+                                obscureText: _obscureText,
+                                onChanged: (value) {
+                                  setState(() {
+                                    password = value.trim();
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Mật khẩu',
+                                  hintStyle: AppWidget.semiBoldTextFeildStyle(),
+                                  prefixIcon: Icon(Icons.password_outlined),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obscureText
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                  ),
+                                  errorStyle: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ForgotPassword()));
+                                },
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 8),
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      color: Color(0Xffff5722),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Center(
+                                    alignment: Alignment.topRight,
                                     child: Text(
-                                      "ĐĂNG NHẬP",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontFamily: 'Poppins1',
-                                          fontWeight: FontWeight.bold),
+                                      "Quên mật khẩu?",
+                                      style: AppWidget.semiBoldTextFeildStyle(),
+                                    )),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (_formkey.currentState!.validate()) {
+                                    setState(() {
+                                      email = useremailcontroller.text;
+                                      password = userpasswordcontroller.text;
+                                    });
+                                  }
+                                  userLogin();
+                                },
+                                child: Material(
+                                  elevation: 5,
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 8),
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                        color: Color(0Xffff5722),
+                                        borderRadius: BorderRadius.circular(20)),
+                                    child: Center(
+                                      child: Text(
+                                        "ĐĂNG NHẬP",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontFamily: 'Poppins1',
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   GestureDetector(
                     onTap: () {
